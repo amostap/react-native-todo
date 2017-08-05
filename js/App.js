@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import NavigationExperimental from 'react-native-deprecated-custom-components';
 import store from './redusers/todos';
-import TaskForm from './components/TaskForm/TaskForm';
-import TaskList from './components/TaskList/TaskList';
+import TaskForm from './screens/TaskForm/TaskForm';
+import TaskList from './screens/TaskList/TaskList';
 
 export default class App extends Component {
   constructor(props) {
