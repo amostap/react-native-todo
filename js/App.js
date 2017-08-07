@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import NavigationExperimental from 'react-native-deprecated-custom-components';
+import { connect } from 'react-redux';
+import { addTodo, doneTodo, toggleState } from './actions/todos';
 import store from './redusers/todos';
 import TaskForm from './screens/TaskForm/TaskForm';
 import TaskList from './screens/TaskList/TaskList';
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = store.getState();
@@ -89,3 +91,5 @@ export default class App extends Component {
     );
   }
 }
+
+export default connect(null, null)(App);

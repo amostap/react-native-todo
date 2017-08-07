@@ -1,7 +1,17 @@
+import React from 'react';
 import { AppRegistry } from 'react-native';
-import App from './js/App';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
-AppRegistry.registerComponent(
-  'reactNativeTodo',
-  () => App,
-);
+import App from './js/App';
+import todoStore from './js/redusers/todos';
+
+const store = createStore(todoStore);
+
+const AppWithRedux = () => {
+  <Provider store={store}>
+    <App />
+  </Provider>;
+};
+
+AppRegistry.registerComponent('reactNativeTodo', () => AppWithRedux);

@@ -1,5 +1,3 @@
-import { createStore } from 'redux';
-
 const defaultTodos = [
   {
     task: 'Make redux',
@@ -17,7 +15,7 @@ const defaultState = {
   filter: 'pending',
 };
 
-function todoStore(state = defaultState, action) {
+export default function todoStore(state = defaultState, action) {
   switch (action.type) {
     case 'ADD_TODO':
       const allTodos = state.allTodos.concat([{
@@ -45,5 +43,3 @@ function todoStore(state = defaultState, action) {
       return state;
   }
 }
-
-export default createStore(todoStore);
