@@ -9,9 +9,11 @@ import todoStore from './js/redusers/todos';
 const store = createStore(todoStore);
 
 const AppWithRedux = () => {
-  <Provider store={store}>
-    <App />
-  </Provider>;
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
 };
 
 AppRegistry.registerComponent('reactNativeTodo', () => AppWithRedux);

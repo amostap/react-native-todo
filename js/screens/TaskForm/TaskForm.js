@@ -9,6 +9,11 @@ import {
 import styles from './styles';
 
 export default class TaskForm extends Component {
+  static propTypes = {
+    onCancel: PropTypes.func.isRequired,
+    onAdd: PropTypes.func.isRequired,
+  };
+
   constructor(props, context) {
     super(props, context);
     this.onChange = this.onChange.bind(this);
@@ -46,8 +51,3 @@ export default class TaskForm extends Component {
     );
   }
 }
-
-TaskForm.propTypes = {
-  onCancel: PropTypes.func.isRequired,
-  onAdd: PropTypes.func.isRequired,
-};

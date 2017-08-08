@@ -11,6 +11,14 @@ import TaskRow from '../../components/TaskRow/TaskRow';
 import styles from './styles';
 
 export default class TaskList extends Component {
+  static propTypes = {
+    filter: PropTypes.string.isRequired,
+    onDone: PropTypes.func.isRequired,
+    onToggle: PropTypes.func.isRequired,
+    todos: PropTypes.arrayOf(PropTypes.object).isRequired,
+    onAddStarted: PropTypes.func.isRequired,
+  };
+
   constructor(props, context) {
     super(props, context);
 
@@ -36,7 +44,6 @@ export default class TaskList extends Component {
 
   render() {
     const { filter, todos, onAddStarted } = this.props;
-
     return (
       <View style={styles.container}>
         <View style={styles.switchView}>
@@ -63,11 +70,3 @@ export default class TaskList extends Component {
     );
   }
 }
-
-TaskList.propTypes = {
-  filter: PropTypes.string.isRequired,
-  onDone: PropTypes.func.isRequired,
-  onToggle: PropTypes.func.isRequired,
-  todos: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onAddStarted: PropTypes.func.isRequired,
-};

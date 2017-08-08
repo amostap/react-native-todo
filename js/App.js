@@ -1,26 +1,65 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import NavigationExperimental from 'react-native-deprecated-custom-components';
 import { connect } from 'react-redux';
 import { addTodo, doneTodo, toggleState } from './actions/todos';
-import store from './redusers/todos';
 import TaskForm from './screens/TaskForm/TaskForm';
 import TaskList from './screens/TaskList/TaskList';
 
+const mapStateToProps = (state) => {
+  return {
+    todos: state.todos,
+    allTodos: state.allTodos,
+    filter: state.filter,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addTodo: (todo) => {
+      dispatch(addTodo(todo));
+    },
+    doneTodo: (todo) => {
+      dispatch(doneTodo(todo));
+    },
+    toggleState: () => {
+      dispatch(toggleState());
+    },
+  };
+};
+
 class App extends Component {
+  static propTypes = {
+    addTodo: PropTypes.func.isRequired,
+    toggleState: PropTypes.func.isRequired,
+    doneTodo: PropTypes.func.isRequired,
+    todos: PropTypes.arrayOf(PropTypes.object).isRequired,
+    allTodos: PropTypes.arrayOf(PropTypes.object).isRequired,
+    filter: PropTypes.string.isRequired,
+  };
+
   constructor(props) {
     super(props);
-    this.state = store.getState();
-
-    store.subscribe(() => {
-      this.setState(store.getState());
-    });
-
     this.onAddStarted = this.onAddStarted.bind(this);
     this.renderScene = this.renderScene.bind(this);
     this.onCancel = this.onCancel.bind(this);
     this.onAdd = this.onAdd.bind(this);
     this.onDone = this.onDone.bind(this);
     this.onToggle = this.onToggle.bind(this);
+  }
+
+  state = {
+    todos: this.props.todos,
+    allTodos: this.props.allTodos,
+    filter: this.props.filter,
+  };
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      todos: nextProps.todos,
+      allTodos: nextProps.allTodos,
+      filter: nextProps.filter,
+    });
   }
 
   onAddStarted() {
@@ -34,24 +73,16 @@ class App extends Component {
   }
 
   onAdd(task) {
-    store.dispatch({
-      type: 'ADD_TODO',
-      task,
-    });
+    this.props.addTodo(task);
     this.nav.pop();
   }
 
   onDone(todo) {
-    store.dispatch({
-      type: 'DONE_TODO',
-      todo,
-    });
+    this.props.doneTodo(todo);
   }
 
   onToggle() {
-    store.dispatch({
-      type: 'TOGGLE_STATE',
-    });
+    this.props.toggleState();
   }
 
   configureScene = () => NavigationExperimental.Navigator.SceneConfigs.FloatFromBottom;
@@ -92,4 +123,4 @@ class App extends Component {
   }
 }
 
-export default connect(null, null)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
