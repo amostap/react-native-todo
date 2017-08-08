@@ -7,6 +7,7 @@ import {
   Image,
 } from 'react-native';
 import styles from './styles';
+import doneImage from '../../../assets/images/done.png';
 
 export default class TaskRow extends React.Component {
   constructor(props, context) {
@@ -26,13 +27,12 @@ export default class TaskRow extends React.Component {
           { this.props.todo.task }
         </Text>
         <TouchableHighlight
-          style={styles.doneButton}
           onPress={this.onDonePressed}
           underlayColor="#d7d7d7"
         >
           <Image
             style={styles.image}
-            source={{ uri: 'http://doneberlin.com/wp-content/themes/done/style/images/general/logo.png' }}
+            source={doneImage}
           />
         </TouchableHighlight>
       </View>

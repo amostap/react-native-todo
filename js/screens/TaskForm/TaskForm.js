@@ -6,12 +6,34 @@ import {
   View,
   TouchableHighlight,
 } from 'react-native';
+import { connect } from 'react-redux';
+import { addTodo } from '../../actions/todos';
 import styles from './styles';
 
-export default class TaskForm extends Component {
+const mapStateToProps = (state) => {
+  return {
+    todos: state.todos,
+    allTodos: state.allTodos,
+    filter: state.filter,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addTodo: (todo) => {
+      dispatch(addTodo(todo));
+    },
+  };
+};
+
+class TaskForm extends Component {
+  static navigationOptions = {
+    title: 'Add todo',
+  };
+
   static propTypes = {
-    onCancel: PropTypes.func.isRequired,
-    onAdd: PropTypes.func.isRequired,
+    addTodo: PropTypes.func.isRequired,
+    navigation: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   };
 
   constructor(props, context) {
@@ -24,8 +46,9 @@ export default class TaskForm extends Component {
     this.task = text;
   }
 
-  onAddPressed() {
-    this.props.onAdd(this.task);
+  onAddPressed(task = 'Empty') {
+    this.props.addTodo(task);
+    this.props.navigation.goBack();
   }
 
   render() {
@@ -36,12 +59,15 @@ export default class TaskForm extends Component {
           onChangeText={this.onChange}
         />
         <View style={styles.horizontalContainer}>
-          <TouchableHighlight style={styles.button} onPress={this.onAddPressed}>
+          <TouchableHighlight style={styles.button} onPress={() => this.onAddPressed(this.task)}>
             <Text style={styles.buttonText}>
               Add
             </Text>
           </TouchableHighlight>
-          <TouchableHighlight style={[styles.button, styles.cancel]} onPress={this.props.onCancel}>
+          <TouchableHighlight
+            style={[styles.button, styles.cancel]}
+            onPress={() => this.props.navigation.goBack()}
+          >
             <Text style={styles.buttonText}>
               Cancel
             </Text>
@@ -51,3 +77,5 @@ export default class TaskForm extends Component {
     );
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskForm);
