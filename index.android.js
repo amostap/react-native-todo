@@ -16,4 +16,4 @@ const AppWithRedux = () => {
   );
 };
 
-AppRegistry.registerComponent('reactNativeTodo', () => AppWithRedux);
+AppRegistry.registerComponent('amTodo', () => AppWithRedux);
