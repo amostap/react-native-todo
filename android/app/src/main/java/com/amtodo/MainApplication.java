@@ -1,4 +1,4 @@
-package com.reactnativetodo;
+package com.amtodo;
 
 import android.app.Application;
 
