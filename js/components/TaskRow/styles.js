@@ -16,14 +16,9 @@ const styles = {
     fontSize: 20,
     fontWeight: '300',
   },
-  doneButton: {
-    borderRadius: 2,
-    borderWidth: 1,
-    borderColor: '#d7d7d7',
-  },
   image: {
-    width: 50,
-    height: 27,
+    width: 30,
+    height: 30,
   },
 };
 
