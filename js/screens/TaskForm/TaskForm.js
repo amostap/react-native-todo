@@ -52,23 +52,25 @@ class TaskForm extends Component {
   }
 
   render() {
+    const { container, input, horizontalContainer, button, buttonText, cancel } = styles;
+
     return (
-      <View style={styles.container}>
+      <View style={container}>
         <TextInput
-          style={styles.input}
+          style={input}
           onChangeText={this.onChange}
         />
-        <View style={styles.horizontalContainer}>
-          <TouchableHighlight style={styles.button} onPress={() => this.onAddPressed(this.task)}>
-            <Text style={styles.buttonText}>
+        <View style={horizontalContainer}>
+          <TouchableHighlight style={button} onPress={() => this.onAddPressed(this.task)}>
+            <Text style={buttonText}>
               Add
             </Text>
           </TouchableHighlight>
           <TouchableHighlight
-            style={[styles.button, styles.cancel]}
+            style={[button, cancel]}
             onPress={() => this.props.navigation.goBack()}
           >
-            <Text style={styles.buttonText}>
+            <Text style={buttonText}>
               Cancel
             </Text>
           </TouchableHighlight>
