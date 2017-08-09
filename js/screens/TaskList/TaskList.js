@@ -43,29 +43,34 @@ export default class TaskList extends Component {
   }
 
   render() {
-    const { filter, todos, onAddStarted } = this.props;
+    const { dataSource } = this.state;
+    const { filter, todos, onAddStarted, onToggle } = this.props;
+    const { container, switchView, toggleText, button, buttonText, buttonContainer } = styles;
+
     return (
-      <View style={styles.container}>
-        <View style={styles.switchView}>
+      <View style={container}>
+        <View style={switchView}>
           <Switch
-            onValueChange={this.props.onToggle}
+            onValueChange={onToggle}
             value={filter !== 'pending'}
           />
-          <Text style={styles.toggleText}>
+          <Text style={toggleText}>
             {`Showing ${todos.length} ${filter} todo(s)`}
           </Text>
         </View>
         <ListView
           enableEmptySections
-          dataSource={this.state.dataSource}
+          dataSource={dataSource}
           renderRow={this.renderRow}
         />
-        <TouchableHighlight
-          style={styles.button}
-          onPress={onAddStarted}
-        >
-          <Text style={styles.buttonText}>+</Text>
-        </TouchableHighlight>
+        <View style={buttonContainer}>
+          <TouchableHighlight
+            style={button}
+            onPress={onAddStarted}
+          >
+            <Text style={buttonText}>+</Text>
+          </TouchableHighlight>
+        </View>
       </View>
     );
   }

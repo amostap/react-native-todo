@@ -23,6 +23,7 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 50,
+    elevation: 5,
   },
   buttonText: {
     color: '#fff',

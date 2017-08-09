@@ -13,6 +13,7 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 50,
+    elevation: 5,
   },
   buttonText: {
     color: '#fff',
@@ -29,6 +30,9 @@ const styles = {
     marginBottom: 10,
     marginLeft: 20,
     marginRight: 20,
+  },
+  buttonContainer: {
+    alignItems: 'flex-end',
   },
 };
 

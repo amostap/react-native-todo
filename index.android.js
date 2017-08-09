@@ -8,12 +8,10 @@ import todoStore from './js/redusers/todos';
 
 const store = createStore(todoStore);
 
-const AppWithRedux = () => {
-  return (
-    <Provider store={store}>
-      <App />
-    </Provider>
-  );
-};
+const AppWithRedux = () => (
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
 
 AppRegistry.registerComponent('amTodo', () => AppWithRedux);
