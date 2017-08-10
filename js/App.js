@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import firebase from 'firebase';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
@@ -24,6 +25,15 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(toggleState());
     },
   };
+};
+
+const FIREBASE_CONFIG = {
+  apiKey: 'AIzaSyDO-nw5ouZO9EqDFJEiV9XAPEwwk8pC9pY',
+  authDomain: 'react-native-todo-f38d5.firebaseapp.com',
+  databaseURL: 'https://react-native-todo-f38d5.firebaseio.com',
+  projectId: 'react-native-todo-f38d5',
+  storageBucket: 'react-native-todo-f38d5.appspot.com',
+  messagingSenderId: '737398168393',
 };
 
 class App extends Component {
@@ -68,16 +78,22 @@ class App extends Component {
     this.props.toggleState();
   }
 
+  componentWillMound() {
+    firebase.initializeApp(FIREBASE_CONFIG);
+  }
+
   render() {
-    const { filter, todos } = this.state();
+    const { filter, todos } = this.state;
+    const { navigation } = this.props;
 
     return (
       <TaskList
         filter={filter}
         todos={todos}
-        onAddStarted={() => this.props.navigation.navigate('TaskForm')}
+        onAddStarted={() => navigation.navigate('TaskForm')}
         onDone={this.onDone}
         onToggle={this.onToggle}
+        navigation={navigation}
       />
     );
   }
