@@ -19,7 +19,7 @@ const styles = {
     margin: 10,
     width: 60,
     height: 60,
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#00CC6A',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 50,
@@ -29,7 +29,7 @@ const styles = {
     color: '#fff',
   },
   cancel: {
-    backgroundColor: '#EF5350',
+    backgroundColor: '#EF6950',
   },
 };
 

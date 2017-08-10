@@ -69,11 +69,13 @@ class App extends Component {
   }
 
   render() {
+    const { filter, todos } = this.state();
+
     return (
       <TaskList
-        filter={this.state.filter}
-        todos={this.state.todos}
-        onAddStarted={() => this.props.navigation.navigate('Form')}
+        filter={filter}
+        todos={todos}
+        onAddStarted={() => this.props.navigation.navigate('TaskForm')}
         onDone={this.onDone}
         onToggle={this.onToggle}
       />

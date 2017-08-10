@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Text,
-  TextInput,
-  View,
-  TouchableHighlight,
-} from 'react-native';
+import { TextInput, View, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
 import { addTodo } from '../../actions/todos';
 import styles from './styles';
@@ -61,19 +57,15 @@ class TaskForm extends Component {
           onChangeText={this.onChange}
         />
         <View style={horizontalContainer}>
-          <TouchableHighlight style={button} onPress={() => this.onAddPressed(this.task)}>
-            <Text style={buttonText}>
-              Add
-            </Text>
-          </TouchableHighlight>
-          <TouchableHighlight
+          <TouchableOpacity style={button} onPress={() => this.onAddPressed(this.task)}>
+            <Icon name="send" size={24} style={buttonText} />
+          </TouchableOpacity>
+          <TouchableOpacity
             style={[button, cancel]}
             onPress={() => this.props.navigation.goBack()}
           >
-            <Text style={buttonText}>
-              Cancel
-            </Text>
-          </TouchableHighlight>
+            <Icon name="clear" size={24} style={buttonText} />
+          </TouchableOpacity>
         </View>
       </View>
     );

@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  View,
-  ListView,
-  Text,
-  TouchableHighlight,
-  Switch,
-} from 'react-native';
+import { View, ListView, Text, TouchableOpacity, Switch } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import TaskRow from '../../components/TaskRow/TaskRow';
 import styles from './styles';
 
@@ -45,7 +40,7 @@ export default class TaskList extends Component {
   render() {
     const { dataSource } = this.state;
     const { filter, todos, onAddStarted, onToggle } = this.props;
-    const { container, switchView, toggleText, button, buttonText, buttonContainer } = styles;
+    const { container, switchView, toggleText, button, buttonText } = styles;
 
     return (
       <View style={container}>
@@ -63,14 +58,16 @@ export default class TaskList extends Component {
           dataSource={dataSource}
           renderRow={this.renderRow}
         />
-        <View style={buttonContainer}>
-          <TouchableHighlight
-            style={button}
-            onPress={onAddStarted}
-          >
-            <Text style={buttonText}>+</Text>
-          </TouchableHighlight>
-        </View>
+        <TouchableOpacity
+          style={button}
+          onPress={onAddStarted}
+        >
+          <Icon
+            name="add"
+            style={buttonText}
+            size={22}
+          />
+        </TouchableOpacity>
       </View>
     );
   }

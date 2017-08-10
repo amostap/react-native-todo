@@ -4,7 +4,7 @@ import TaskForm from './screens/TaskForm/TaskForm';
 
 const SimpleApp = StackNavigator({
   App: { screen: App },
-  Form: { screen: TaskForm },
+  TaskForm: { screen: TaskForm },
 });
 
 export default SimpleApp;
