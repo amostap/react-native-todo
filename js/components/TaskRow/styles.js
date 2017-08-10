@@ -16,10 +16,6 @@ const styles = {
     fontSize: 18,
     fontWeight: '300',
   },
-  image: {
-    width: 26,
-    height: 26,
-  },
 };
 
 export default styles;

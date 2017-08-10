@@ -6,19 +6,20 @@ const styles = {
     justifyContent: 'flex-start',
   },
   button: {
+    position: 'absolute',
     width: 60,
     height: 60,
+    bottom: 15,
+    right: 15,
     backgroundColor: '#4DB6AC',
-    margin: 20,
     justifyContent: 'center',
     alignItems: 'center',
+    alignSelf: 'flex-end',
     borderRadius: 50,
     elevation: 5,
   },
   buttonText: {
     color: '#fff',
-    fontSize: 24,
-    fontWeight: '400',
   },
   toggleText: {
     marginLeft: 20,
@@ -30,9 +31,6 @@ const styles = {
     marginBottom: 10,
     marginLeft: 20,
     marginRight: 20,
-  },
-  buttonContainer: {
-    alignItems: 'flex-end',
   },
 };
 
