@@ -12,6 +12,7 @@ export default class TaskList extends Component {
     onToggle: PropTypes.func.isRequired,
     todos: PropTypes.arrayOf(PropTypes.object).isRequired,
     onAddStarted: PropTypes.func.isRequired,
+    navigation: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   };
 
   constructor(props, context) {
@@ -40,7 +41,7 @@ export default class TaskList extends Component {
   render() {
     const { dataSource } = this.state;
     const { filter, todos, onAddStarted, onToggle } = this.props;
-    const { container, switchView, toggleText, button, buttonText } = styles;
+    const { container, switchView, toggleText, button, buttonText, loginButton } = styles;
 
     return (
       <View style={container}>
@@ -64,6 +65,16 @@ export default class TaskList extends Component {
         >
           <Icon
             name="add"
+            style={buttonText}
+            size={22}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[button, loginButton]}
+          onPress={() => this.props.navigation.navigate('Login')}
+        >
+          <Icon
+            name="account-circle"
             style={buttonText}
             size={22}
           />

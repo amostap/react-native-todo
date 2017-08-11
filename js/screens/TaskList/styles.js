@@ -32,6 +32,9 @@ const styles = {
     marginLeft: 20,
     marginRight: 20,
   },
+  loginButton: {
+    left: 15,
+  },
 };
 
 export default styles;
