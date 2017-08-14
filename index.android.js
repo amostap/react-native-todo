@@ -2,11 +2,10 @@ import React from 'react';
 import { AppRegistry } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
+import App from './js/App';
+import AppStore from './js/redusers';
 
-import App from './js/navigation';
-import todoStore from './js/redusers/todos';
-
-const store = createStore(todoStore);
+const store = createStore(AppStore);
 
 const AppWithRedux = () => (
   <Provider store={store}>

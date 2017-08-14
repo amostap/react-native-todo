@@ -1,18 +1,42 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import * as firebase from 'firebase';
 import { View, ListView, Text, TouchableOpacity, Switch } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { connect } from 'react-redux';
+import { doneTodo, toggleState } from '../../actions/todos';
 import TaskRow from '../../components/TaskRow/TaskRow';
 import styles from './styles';
 
-export default class TaskList extends Component {
+const mapStateToProps = (state) => {
+  return {
+    todos: state.todos.todos,
+    filter: state.todos.filter,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    doneTodo: (todo) => {
+      dispatch(doneTodo(todo));
+    },
+    toggleState: () => {
+      dispatch(toggleState());
+    },
+  };
+};
+
+class TaskList extends Component {
+  static navigationOptions = {
+    title: 'Tasks',
+  };
+
   static propTypes = {
-    filter: PropTypes.string.isRequired,
-    onDone: PropTypes.func.isRequired,
-    onToggle: PropTypes.func.isRequired,
-    todos: PropTypes.arrayOf(PropTypes.object).isRequired,
-    onAddStarted: PropTypes.func.isRequired,
     navigation: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+    filter: PropTypes.string.isRequired,
+    todos: PropTypes.arrayOf(PropTypes.object).isRequired,
+    doneTodo: PropTypes.func.isRequired,
+    toggleState: PropTypes.func.isRequired,
   };
 
   constructor(props, context) {
@@ -24,30 +48,51 @@ export default class TaskList extends Component {
 
     this.state = {
       dataSource: ds.cloneWithRows(props.todos),
+      todos: this.props.todos,
+      filter: this.props.filter,
     };
 
+    this.onDone = this.onDone.bind(this);
+    this.onToggle = this.onToggle.bind(this);
     this.renderRow = this.renderRow.bind(this);
+    this.onLogoutPressed = this.onLogoutPressed.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     const dataSource = this.state.dataSource.cloneWithRows(nextProps.todos);
-    this.setState({ dataSource });
+    this.setState({
+      dataSource,
+      todos: nextProps.todos,
+      filter: nextProps.filter,
+    });
+  }
+
+  onDone(todo) {
+    this.props.doneTodo(todo);
+  }
+
+  onToggle() {
+    this.props.toggleState();
+  }
+
+  onLogoutPressed() {
+    firebase.auth().signOut();
   }
 
   renderRow(todo) {
-    return <TaskRow todo={todo} onDone={this.props.onDone} />;
+    return <TaskRow todo={todo} onDone={this.onDone} />;
   }
 
   render() {
-    const { dataSource } = this.state;
-    const { filter, todos, onAddStarted, onToggle } = this.props;
-    const { container, switchView, toggleText, button, buttonText, loginButton } = styles;
+    const { dataSource, filter, todos } = this.state;
+    const { navigation } = this.props;
+    const { container, switchView, toggleText, button, buttonText, logOutbutton } = styles;
 
     return (
       <View style={container}>
         <View style={switchView}>
           <Switch
-            onValueChange={onToggle}
+            onValueChange={this.onToggle}
             value={filter !== 'pending'}
           />
           <Text style={toggleText}>
@@ -61,7 +106,7 @@ export default class TaskList extends Component {
         />
         <TouchableOpacity
           style={button}
-          onPress={onAddStarted}
+          onPress={() => navigation.navigate('TaskForm')}
         >
           <Icon
             name="add"
@@ -70,16 +115,14 @@ export default class TaskList extends Component {
           />
         </TouchableOpacity>
         <TouchableOpacity
-          style={[button, loginButton]}
-          onPress={() => this.props.navigation.navigate('Login')}
+          style={[button, logOutbutton]}
+          onPress={() => this.onLogoutPressed()}
         >
-          <Icon
-            name="account-circle"
-            style={buttonText}
-            size={22}
-          />
+          <Text>log out</Text>
         </TouchableOpacity>
       </View>
     );
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskList);
