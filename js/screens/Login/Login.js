@@ -1,34 +1,56 @@
 import React, { Component } from 'react';
-import firebase from 'firebase';
+import PropTypes from 'prop-types';
 import { View, TextInput, TouchableOpacity, Text } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import * as firebase from 'firebase';
+import { connect } from 'react-redux';
+import { logIn } from '../../actions/auth';
+import Spinner from '../../components/Spinner/Spinner';
 import styles from './styles';
 
-const FIREBASE_CONFIG = {
-  apiKey: 'AIzaSyDO-nw5ouZO9EqDFJEiV9XAPEwwk8pC9pY',
-  authDomain: 'react-native-todo-f38d5.firebaseapp.com',
-  databaseURL: 'https://react-native-todo-f38d5.firebaseio.com',
-  projectId: 'react-native-todo-f38d5',
-  storageBucket: 'react-native-todo-f38d5.appspot.com',
-  messagingSenderId: '737398168393',
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logIn: () => {
+      dispatch(logIn());
+    },
+  };
 };
 
-export default class Login extends Component {
-  static navigationOptions = {
-    title: 'Auth/Login',
+class Login extends Component {
+  static propTypes = {
+    logIn: PropTypes.func.isRequired,
   };
 
   constructor(props, context) {
     super(props, context);
-
+    this.onSignUpPressed = this.onSignUpPressed.bind(this);
     this.onChangeText = this.onChangeText.bind(this);
-    this.onConfirmForm = this.onConfirmForm.bind(this);
   }
 
   state = {
     email: '',
     password: '',
-    error: '',
+    message: '',
+    loading: false,
+  }
+
+  onLoginPressed(email, password) {
+    this.setState({
+      loading: true,
+    });
+
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(() => this.props.logIn())
+      .catch(err => this.showMessage(err.message));
+  }
+
+  onSignUpPressed(email, password) {
+    this.setState({
+      loading: true,
+    });
+
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(() => this.showMessage('Successfuly created'))
+      .catch(err => this.showMessage(err.message));
   }
 
   onChangeText(key, value) {
@@ -37,53 +59,55 @@ export default class Login extends Component {
     });
   }
 
-  onConfirmForm(email, password) {
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .catch(() => {
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-          .catch(() => {
-            this.setState({
-              error: 'Error',
-            });
-          });
-      });
-  }
-
-  componentDidMound() {
-    firebase.initializeApp(FIREBASE_CONFIG);
+  showMessage(message) {
+    this.setState({
+      message,
+      loading: false,
+    });
   }
 
   render() {
-    const { container, input, button, buttonText } = styles;
-    const { error, password, email } = this.state;
+    const { container, input, button, messageStyle, buttonsContainer, link } = styles;
+    const { message, password, email, loading } = this.state;
 
     return (
       <View style={container}>
-        <Text>
-          { error }
-        </Text>
+        {
+          loading
+            ? <Spinner size="small" />
+            : <Text style={messageStyle}>{ message }</Text>
+        }
         <TextInput
           placeholder="email"
           style={input}
+          value={email}
           onChangeText={v => this.onChangeText('email', v)}
         />
         <TextInput
           secureTextEntry
           placeholder="password"
           style={input}
+          value={password}
           onChangeText={v => this.onChangeText('password', v)}
         />
-        <TouchableOpacity
-          style={button}
-          onPress={() => this.onConfirmForm(email, password)}
-        >
-          <Icon
-            name="account-circle"
-            style={buttonText}
-            size={22}
-          />
-        </TouchableOpacity>
+        <View style={buttonsContainer}>
+          <TouchableOpacity
+            style={button}
+            onPress={() => this.onSignUpPressed(email, password)}
+          >
+            <Text style={link}>Sign Up</Text>
+          </TouchableOpacity>
+          <Text>or</Text>
+          <TouchableOpacity
+            style={button}
+            onPress={() => this.onLoginPressed(email, password)}
+          >
+            <Text style={link}>Log In</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
 }
+
+export default connect(null, mapDispatchToProps)(Login);

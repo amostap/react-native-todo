@@ -1,27 +1,24 @@
 const styles = {
   container: {
-    backgroundColor: '#E0F2F1',
     flex: 1,
+    backgroundColor: '#E0F2F1',
+    padding: 20,
+  },
+  messageStyle: {
+    fontSize: 14,
   },
   input: {
-    height: 50,
-    marginLeft: 20,
-    marginRight: 20,
-    paddingLeft: 5,
-    paddingRight: 5,
+    height: 40,
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
   },
   button: {
-    margin: 10,
-    width: 60,
-    height: 60,
-    backgroundColor: '#00CC6A',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 50,
-    elevation: 5,
+    marginRight: 15,
+    marginLeft: 15,
   },
-  buttonText: {
-    color: '#fff',
+  link: {
+    color: '#4DB6AC',
   },
 };
 

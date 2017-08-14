@@ -32,7 +32,7 @@ const styles = {
     marginLeft: 20,
     marginRight: 20,
   },
-  loginButton: {
+  logOutbutton: {
     left: 15,
   },
 };
