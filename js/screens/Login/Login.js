@@ -1,56 +1,41 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View, TextInput, TouchableOpacity, Text } from 'react-native';
-import * as firebase from 'firebase';
 import { connect } from 'react-redux';
-import { logIn } from '../../actions/auth';
-import Spinner from '../../components/Spinner/Spinner';
+import { logIn, singUp } from '../../actions/auth';
+// import Spinner from '../../components/Spinner/Spinner';
 import styles from './styles';
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    logIn: () => {
-      dispatch(logIn());
-    },
-  };
-};
-
 class Login extends Component {
+  static defaultProps = {
+    message: '',
+  };
+
   static propTypes = {
     logIn: PropTypes.func.isRequired,
+    singUp: PropTypes.func.isRequired,
+    message: PropTypes.string,
   };
 
   constructor(props, context) {
     super(props, context);
+
+    this.onLoginPressed = this.onLoginPressed.bind(this);
     this.onSignUpPressed = this.onSignUpPressed.bind(this);
     this.onChangeText = this.onChangeText.bind(this);
   }
 
   state = {
-    email: '',
-    password: '',
-    message: '',
-    loading: false,
+    email: 'alexandr.amostap@gmail.com',
+    password: '123123',
   }
 
   onLoginPressed(email, password) {
-    this.setState({
-      loading: true,
-    });
-
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(() => this.props.logIn())
-      .catch(err => this.showMessage(err.message));
+    this.props.logIn({ email, password });
   }
 
   onSignUpPressed(email, password) {
-    this.setState({
-      loading: true,
-    });
-
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then(() => this.showMessage('Successfuly created'))
-      .catch(err => this.showMessage(err.message));
+    this.props.singUp({ email, password });
   }
 
   onChangeText(key, value) {
@@ -59,24 +44,13 @@ class Login extends Component {
     });
   }
 
-  showMessage(message) {
-    this.setState({
-      message,
-      loading: false,
-    });
-  }
-
   render() {
     const { container, input, button, messageStyle, buttonsContainer, link } = styles;
-    const { message, password, email, loading } = this.state;
+    const { password, email } = this.state;
 
     return (
       <View style={container}>
-        {
-          loading
-            ? <Spinner size="small" />
-            : <Text style={messageStyle}>{ message }</Text>
-        }
+        <Text style={messageStyle}>{ this.props.message }</Text>
         <TextInput
           placeholder="email"
           style={input}
@@ -110,4 +84,8 @@ class Login extends Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Login);
+const mapStateToProps = ({ auth: { message } }) => ({
+  message,
+});
+
+export default connect(mapStateToProps, { logIn, singUp })(Login);

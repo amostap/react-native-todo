@@ -1,30 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import * as firebase from 'firebase';
 import { View, ListView, Text, TouchableOpacity, Switch } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
 import { doneTodo, toggleState } from '../../actions/todos';
+import { logOut } from '../../actions/auth';
 import TaskRow from '../../components/TaskRow/TaskRow';
 import styles from './styles';
-
-const mapStateToProps = (state) => {
-  return {
-    todos: state.todos.todos,
-    filter: state.todos.filter,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    doneTodo: (todo) => {
-      dispatch(doneTodo(todo));
-    },
-    toggleState: () => {
-      dispatch(toggleState());
-    },
-  };
-};
 
 class TaskList extends Component {
   static navigationOptions = {
@@ -37,6 +19,7 @@ class TaskList extends Component {
     todos: PropTypes.arrayOf(PropTypes.object).isRequired,
     doneTodo: PropTypes.func.isRequired,
     toggleState: PropTypes.func.isRequired,
+    logOut: PropTypes.func.isRequired,
   };
 
   constructor(props, context) {
@@ -76,7 +59,7 @@ class TaskList extends Component {
   }
 
   onLogoutPressed() {
-    firebase.auth().signOut();
+    this.props.logOut();
   }
 
   renderRow(todo) {
@@ -125,4 +108,6 @@ class TaskList extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaskList);
+const mapStateToProps = ({ todos: { todos, filter } }) => ({ todos, filter });
+
+export default connect(mapStateToProps, { doneTodo, toggleState, logOut })(TaskList);
