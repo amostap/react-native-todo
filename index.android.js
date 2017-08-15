@@ -1,16 +1,16 @@
 import React from 'react';
 import { AppRegistry } from 'react-native';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import ReduxThunk from 'redux-thunk';
+
 import App from './js/App';
-import AppStore from './js/redusers';
+import Store from './js/redusers';
 
-const store = createStore(AppStore);
-
-const AppWithRedux = () => (
-  <Provider store={store}>
+const AppWithStore = () => (
+  <Provider store={createStore(Store, {}, applyMiddleware(ReduxThunk))}>
     <App />
   </Provider>
 );
 
-AppRegistry.registerComponent('amTodo', () => AppWithRedux);
+AppRegistry.registerComponent('amTodo', () => AppWithStore);

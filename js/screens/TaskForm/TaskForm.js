@@ -6,22 +6,6 @@ import { connect } from 'react-redux';
 import { addTodo } from '../../actions/todos';
 import styles from './styles';
 
-const mapStateToProps = (state) => {
-  return {
-    todos: state.todos,
-    allTodos: state.allTodos,
-    filter: state.filter,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addTodo: (todo) => {
-      dispatch(addTodo(todo));
-    },
-  };
-};
-
 class TaskForm extends Component {
   static navigationOptions = {
     title: 'Add todo',
@@ -72,4 +56,4 @@ class TaskForm extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaskForm);
+export default connect(null, { addTodo })(TaskForm);

@@ -1,3 +1,9 @@
+import {
+  ADD_TODO,
+  DONE_TODO,
+  TOGGLE_STATE,
+} from '../actions/types';
+
 const defaultTodos = [
   {
     task: 'Make redux1',
@@ -9,15 +15,15 @@ const defaultTodos = [
   },
 ];
 
-const defaultState = {
+const initialState = {
   todos: defaultTodos,
   allTodos: defaultTodos,
   filter: 'pending',
 };
 
-export default function todoStore(state = defaultState, action) {
+export default function todoStore(state = initialState, action) {
   switch (action.type) {
-    case 'ADD_TODO':
+    case ADD_TODO:
       const allTodos = state.allTodos.concat([{
         task: action.task,
         state: 'pending',
@@ -27,7 +33,7 @@ export default function todoStore(state = defaultState, action) {
         allTodos,
         todos: allTodos.filter(todo => todo.state === state.filter),
       };
-    case 'DONE_TODO':
+    case DONE_TODO:
       const doneTodo = {
         ...action.todo,
         state: 'done',
@@ -38,7 +44,7 @@ export default function todoStore(state = defaultState, action) {
         allTodos: updatedAllTodos,
         todos: updatedAllTodos.filter(todo => todo.state === state.filter),
       };
-    case 'TOGGLE_STATE':
+    case TOGGLE_STATE:
       const filter = state.filter === 'pending' ? 'done' : 'pending';
       return {
         ...state,

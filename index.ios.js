@@ -4,14 +4,12 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
 import App from './js/App';
-import AppStore from './js/redusers';
+import Store from './js/redusers';
 
-const store = createStore(AppStore);
-
-const AppWithRedux = () => (
-  <Provider store={store}>
+const AppWithStore = () => (
+  <Provider store={createStore(Store)}>
     <App />
   </Provider>
 );
 
-AppRegistry.registerComponent('amTodo', () => AppWithRedux);
+AppRegistry.registerComponent('amTodo', () => AppWithStore);
