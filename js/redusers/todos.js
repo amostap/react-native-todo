@@ -2,6 +2,7 @@ import {
   ADD_TODO,
   DONE_TODO,
   TOGGLE_STATE,
+  DELETE_TODO,
 } from '../actions/types';
 
 const defaultTodos = [
@@ -43,6 +44,12 @@ export default function todoStore(state = initialState, action) {
         ...state,
         allTodos: updatedAllTodos,
         todos: updatedAllTodos.filter(todo => todo.state === state.filter),
+      };
+    case DELETE_TODO:
+      return {
+        ...state,
+        allTodos: state.allTodos.filter(todo => todo !== action.todo),
+        todos: state.todos.filter(todo => todo !== action.todo),
       };
     case TOGGLE_STATE:
       const filter = state.filter === 'pending' ? 'done' : 'pending';
