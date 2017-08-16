@@ -13,8 +13,15 @@ const styles = {
     elevation: 3,
   },
   label: {
+    flex: 1,
     fontSize: 18,
     fontWeight: '300',
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+  },
+  button: {
+    marginLeft: 10,
   },
 };
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { View, ListView, Text, TouchableOpacity, Switch } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
-import { doneTodo, toggleState } from '../../actions/todos';
+import { doneTodo, toggleState, deleteTodo } from '../../actions/todos';
 import { logOut } from '../../actions/auth';
 import TaskRow from '../../components/TaskRow/TaskRow';
 import styles from './styles';
@@ -20,6 +20,7 @@ class TaskList extends Component {
     doneTodo: PropTypes.func.isRequired,
     toggleState: PropTypes.func.isRequired,
     logOut: PropTypes.func.isRequired,
+    deleteTodo: PropTypes.func.isRequired,
   };
 
   constructor(props, context) {
@@ -36,9 +37,10 @@ class TaskList extends Component {
     };
 
     this.onDone = this.onDone.bind(this);
+    this.onDelete = this.onDelete.bind(this);
     this.onToggle = this.onToggle.bind(this);
-    this.renderRow = this.renderRow.bind(this);
     this.onLogoutPressed = this.onLogoutPressed.bind(this);
+    this.renderRow = this.renderRow.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -58,12 +60,22 @@ class TaskList extends Component {
     this.props.toggleState();
   }
 
+  onDelete(todo) {
+    this.props.deleteTodo(todo);
+  }
+
   onLogoutPressed() {
     this.props.logOut();
   }
 
   renderRow(todo) {
-    return <TaskRow todo={todo} onDone={this.onDone} />;
+    return (
+      <TaskRow
+        todo={todo}
+        onDone={this.onDone}
+        onDelete={t => this.onDelete(t)}
+      />
+    );
   }
 
   render() {
@@ -110,4 +122,4 @@ class TaskList extends Component {
 
 const mapStateToProps = ({ todos: { todos, filter } }) => ({ todos, filter });
 
-export default connect(mapStateToProps, { doneTodo, toggleState, logOut })(TaskList);
+export default connect(mapStateToProps, { doneTodo, toggleState, logOut, deleteTodo })(TaskList);

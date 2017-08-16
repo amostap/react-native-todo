@@ -1,6 +1,6 @@
 import { StackNavigator } from 'react-navigation';
-import TaskForm from '../TaskForm/TaskForm';
-import TaskList from '../TaskList/TaskList';
+import TaskForm from '../screens/TaskForm/TaskForm';
+import TaskList from '../screens/TaskList/TaskList';
 
 const TaskListNavigator = StackNavigator({
   TaskList: { screen: TaskList },

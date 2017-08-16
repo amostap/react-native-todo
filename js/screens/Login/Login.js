@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { View, TextInput, TouchableOpacity, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { logIn, singUp } from '../../actions/auth';
-// import Spinner from '../../components/Spinner/Spinner';
+import Spinner from '../../components/Spinner/Spinner';
 import styles from './styles';
 
 class Login extends Component {
@@ -15,6 +15,7 @@ class Login extends Component {
     logIn: PropTypes.func.isRequired,
     singUp: PropTypes.func.isRequired,
     message: PropTypes.string,
+    loading: PropTypes.bool.isRequired,
   };
 
   constructor(props, context) {
@@ -47,10 +48,14 @@ class Login extends Component {
   render() {
     const { container, input, button, messageStyle, buttonsContainer, link } = styles;
     const { password, email } = this.state;
+    const { loading, message } = this.props;
 
     return (
       <View style={container}>
-        <Text style={messageStyle}>{ this.props.message }</Text>
+        { loading
+          ? <Spinner />
+          : <Text style={messageStyle}>{ message }</Text>
+        }
         <TextInput
           placeholder="email"
           style={input}
@@ -84,8 +89,9 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = ({ auth: { message } }) => ({
+const mapStateToProps = ({ auth: { message, loading } }) => ({
   message,
+  loading,
 });
 
 export default connect(mapStateToProps, { logIn, singUp })(Login);
