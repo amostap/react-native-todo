@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import map from 'lodash/map';
 import { View, ListView, Text, TouchableOpacity, Switch } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
-import { doneTodo, toggleState, deleteTodo } from '../../actions/todos';
+import { doneTodo, toggleState, deleteTodo, getTodos } from '../../actions/todos';
 import { logOut } from '../../actions/auth';
 import TaskRow from '../../components/TaskRow/TaskRow';
 import styles from './styles';
@@ -21,6 +22,7 @@ class TaskList extends Component {
     toggleState: PropTypes.func.isRequired,
     logOut: PropTypes.func.isRequired,
     deleteTodo: PropTypes.func.isRequired,
+    getTodos: PropTypes.func.isRequired,
   };
 
   constructor(props, context) {
@@ -32,8 +34,6 @@ class TaskList extends Component {
 
     this.state = {
       dataSource: ds.cloneWithRows(props.todos),
-      todos: this.props.todos,
-      filter: this.props.filter,
     };
 
     this.onDone = this.onDone.bind(this);
@@ -43,12 +43,14 @@ class TaskList extends Component {
     this.renderRow = this.renderRow.bind(this);
   }
 
+  componentWillMount() {
+    this.props.getTodos();
+  }
+
   componentWillReceiveProps(nextProps) {
     const dataSource = this.state.dataSource.cloneWithRows(nextProps.todos);
     this.setState({
       dataSource,
-      todos: nextProps.todos,
-      filter: nextProps.filter,
     });
   }
 
@@ -79,8 +81,8 @@ class TaskList extends Component {
   }
 
   render() {
-    const { dataSource, filter, todos } = this.state;
-    const { navigation } = this.props;
+    const { dataSource } = this.state;
+    const { navigation, todos, filter } = this.props;
     const { container, switchView, toggleText, button, buttonText, logOutbutton } = styles;
 
     return (
@@ -120,6 +122,14 @@ class TaskList extends Component {
   }
 }
 
-const mapStateToProps = ({ todos: { todos, filter } }) => ({ todos, filter });
+const mapStateToProps = ({ todos }) => {
+  return {
+    todos: todos.todos,
+    filter: todos.filter,
+  };
+};
 
-export default connect(mapStateToProps, { doneTodo, toggleState, logOut, deleteTodo })(TaskList);
+export default connect(
+  mapStateToProps,
+  { doneTodo, toggleState, logOut, deleteTodo, getTodos },
+)(TaskList);
