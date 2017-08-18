@@ -1,28 +1,40 @@
+import * as firebase from 'firebase';
 import {
+  GET_TODOS_SUCCESS,
   TOGGLE_STATE,
   DONE_TODO,
-  ADD_TODO,
   DELETE_TODO,
 } from './types';
 
+export const getTodos = () => {
+  return (dispatch) => {
+    firebase.database().ref(`/allTodos/${firebase.auth().currentUser.uid}/todos`)
+      .on('value', (snapshot) => {
+        dispatch({ type: GET_TODOS_SUCCESS, todos: snapshot.val() });
+      });
+  };
+};
+
 export const addTodo = (task) => {
-  return {
-    type: ADD_TODO,
-    task,
+  return () => {
+    firebase.database().ref(`/allTodos/${firebase.auth().currentUser.uid}/todos`)
+      .push({ task, state: 'pending' });
   };
 };
 
 export const deleteTodo = (todo) => {
-  return {
-    type: DELETE_TODO,
-    todo,
+  return (dispatch) => {
+    firebase.database().ref(`/allTodos/${firebase.auth().currentUser.uid}/todos/${todo.id}`)
+      .remove()
+      .then(() => dispatch({ type: DELETE_TODO, todo }));
   };
 };
 
 export const doneTodo = (todo) => {
-  return {
-    type: DONE_TODO,
-    todo,
+  return (dispatch) => {
+    firebase.database().ref(`/allTodos/${firebase.auth().currentUser.uid}/todos/${todo.id}`)
+      .set({ task: todo.task, state: 'done' })
+      .then(() => dispatch({ type: DONE_TODO, todo }));
   };
 };
 

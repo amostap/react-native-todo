@@ -27,8 +27,8 @@ class Login extends Component {
   }
 
   state = {
-    email: 'alexandr.amostap@gmail.com',
-    password: '123123',
+    email: '',
+    password: '',
   }
 
   onLoginPressed(email, password) {

@@ -1,62 +1,55 @@
+import { filter, map } from 'lodash';
 import {
-  ADD_TODO,
+  DELETE_TODO,
   DONE_TODO,
   TOGGLE_STATE,
-  DELETE_TODO,
+  GET_TODOS_SUCCESS,
 } from '../actions/types';
 
-const defaultTodos = [
-  {
-    task: 'Make redux1',
-    state: 'pending',
-  },
-  {
-    task: 'Make it run',
-    state: 'pending',
-  },
-];
-
 const initialState = {
-  todos: defaultTodos,
-  allTodos: defaultTodos,
+  todos: [],
+  allTodos: [],
   filter: 'pending',
 };
 
 export default function todoStore(state = initialState, action) {
   switch (action.type) {
-    case ADD_TODO:
-      const allTodos = state.allTodos.concat([{
-        task: action.task,
-        state: 'pending',
-      }]);
+    case GET_TODOS_SUCCESS:
+      // add id to todo obj
+      const todos = map(action.todos, (todo, key) => ({
+        ...todo,
+        id: key,
+      }));
       return {
         ...state,
-        allTodos,
-        todos: allTodos.filter(todo => todo.state === state.filter),
+        todos: filter(todos, todo => todo.state === state.filter),
+        allTodos: todos,
+      };
+    case DELETE_TODO:
+      return {
+        ...state,
+        allTodos: filter(state.allTodos, todo => todo.id !== action.todo.id),
+        todos: filter(state.todos, todo => todo.id !== action.todo.id),
       };
     case DONE_TODO:
       const doneTodo = {
         ...action.todo,
         state: 'done',
       };
-      const updatedAllTodos = state.allTodos.map(todo => todo === action.todo ? doneTodo : todo);
+      const updatedAllTodos = map(state.allTodos, todo =>
+        todo.id === action.todo.id ? doneTodo : todo,
+      );
       return {
         ...state,
         allTodos: updatedAllTodos,
-        todos: updatedAllTodos.filter(todo => todo.state === state.filter),
-      };
-    case DELETE_TODO:
-      return {
-        ...state,
-        allTodos: state.allTodos.filter(todo => todo !== action.todo),
-        todos: state.todos.filter(todo => todo !== action.todo),
+        todos: filter(updatedAllTodos, todo => todo.state === state.filter),
       };
     case TOGGLE_STATE:
-      const filter = state.filter === 'pending' ? 'done' : 'pending';
+      const todoFilter = state.filter === 'pending' ? 'done' : 'pending';
       return {
         ...state,
-        filter,
-        todos: state.allTodos.filter(todo => todo.state === filter),
+        filter: todoFilter,
+        todos: filter(state.allTodos, todo => todo.state === todoFilter),
       };
     default:
       return state;
