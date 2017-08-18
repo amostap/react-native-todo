@@ -1,16 +1,20 @@
 {
   "name": "react-native-todo",
-  "version": "0.0.1",
-  "description": "TODO",
+  "version": "0.0.2",
+  "description": "simple TODO app",
   "private": false,
   "author": "amostap",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amostap/react-native-todo.git"
+  },
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest"
   },
   "dependencies": {
-    "firebase": "^4.2.0",
+    "firebase": "^4.3.0",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
     "react": "16.0.0-alpha.12",
