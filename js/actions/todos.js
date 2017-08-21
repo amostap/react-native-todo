@@ -4,10 +4,12 @@ import {
   TOGGLE_STATE,
   DONE_TODO,
   DELETE_TODO,
+  LOADING,
 } from './types';
 
 export const getTodos = () => {
   return (dispatch) => {
+    dispatch({ type: LOADING });
     firebase.database().ref(`/allTodos/${firebase.auth().currentUser.uid}/todos`)
       .on('value', (snapshot) => {
         dispatch({ type: GET_TODOS_SUCCESS, todos: snapshot.val() });

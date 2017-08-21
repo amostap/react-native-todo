@@ -5,12 +5,14 @@ import {
   DONE_TODO,
   TOGGLE_STATE,
   GET_TODOS_SUCCESS,
+  LOADING,
 } from '../actions/types';
 
 const initialState = {
   todos: [],
   allTodos: [],
   filter: 'pending',
+  loading: false,
 };
 
 export default function todoStore(state = initialState, action) {
@@ -25,6 +27,12 @@ export default function todoStore(state = initialState, action) {
         ...state,
         todos: filter(todos, todo => todo.state === state.filter),
         allTodos: todos,
+        loading: false,
+      };
+    case LOADING:
+      return {
+        ...state,
+        loading: true,
       };
     case DELETE_TODO:
       return {

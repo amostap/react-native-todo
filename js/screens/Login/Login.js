@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, TextInput, TouchableOpacity, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { logIn, singUp } from '../../actions/auth';
+import Input from '../../components/Input/Input';
+import Button from '../../components/Button/Button';
+import Logo from '../../../assets/images/icon.png';
 import Spinner from '../../components/Spinner/Spinner';
 import styles from './styles';
 
@@ -46,43 +49,48 @@ class Login extends Component {
   }
 
   render() {
-    const { container, input, button, messageStyle, buttonsContainer, link } = styles;
+    const { container, image, contentContainer, infoContainer,
+      messageStyle } = styles;
     const { password, email } = this.state;
     const { loading, message } = this.props;
 
     return (
       <View style={container}>
-        { loading
-          ? <Spinner />
-          : <Text style={messageStyle}>{ message }</Text>
-        }
-        <TextInput
-          placeholder="email"
-          style={input}
-          value={email}
-          onChangeText={v => this.onChangeText('email', v)}
-        />
-        <TextInput
-          secureTextEntry
-          placeholder="password"
-          style={input}
-          value={password}
-          onChangeText={v => this.onChangeText('password', v)}
-        />
-        <View style={buttonsContainer}>
-          <TouchableOpacity
-            style={button}
-            onPress={() => this.onSignUpPressed(email, password)}
-          >
-            <Text style={link}>Sign Up</Text>
-          </TouchableOpacity>
-          <Text>or</Text>
-          <TouchableOpacity
-            style={button}
-            onPress={() => this.onLoginPressed(email, password)}
-          >
-            <Text style={link}>Log In</Text>
-          </TouchableOpacity>
+        <Image style={image} source={Logo} />
+        <View style={contentContainer}>
+          <View>
+            <Input
+              keyboardType="email-address"
+              placeholder="Email"
+              value={email}
+              onChangeText={v => this.onChangeText('email', v)}
+            />
+            <Input
+              secureTextEntry
+              placeholder="Password"
+              value={password}
+              onChangeText={v => this.onChangeText('password', v)}
+            />
+            <View style={infoContainer}>
+              {
+                loading
+                  ? <Spinner />
+                  : <Text style={messageStyle}>{ message }</Text>
+              }
+            </View>
+          </View>
+          <View>
+            <Button
+              color="#CA0E13"
+              title="Login"
+              onPress={() => this.onLoginPressed(email, password)}
+            />
+            <Button
+              color="#4A4959"
+              title="Sign Up"
+              onPress={() => this.onSignUpPressed(email, password)}
+            />
+          </View>
         </View>
       </View>
     );

@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import map from 'lodash/map';
 import { View, ListView, Text, TouchableOpacity, Switch } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
 import { doneTodo, toggleState, deleteTodo, getTodos } from '../../actions/todos';
 import { logOut } from '../../actions/auth';
 import TaskRow from '../../components/TaskRow/TaskRow';
+import Spinner from '../../components/Spinner/Spinner';
 import styles from './styles';
 
 class TaskList extends Component {
   static navigationOptions = {
     title: 'Tasks',
+    headerTitleStyle: {
+      color: 'rgba(255, 255, 255, 0.5)',
+    },
+    headerStyle: {
+      backgroundColor: '#383846',
+    },
   };
 
   static propTypes = {
@@ -23,6 +29,7 @@ class TaskList extends Component {
     logOut: PropTypes.func.isRequired,
     deleteTodo: PropTypes.func.isRequired,
     getTodos: PropTypes.func.isRequired,
+    loading: PropTypes.bool.isRequired,
   };
 
   constructor(props, context) {
@@ -82,7 +89,7 @@ class TaskList extends Component {
 
   render() {
     const { dataSource } = this.state;
-    const { navigation, todos, filter } = this.props;
+    const { navigation, todos, filter, loading } = this.props;
     const { container, switchView, toggleText, button, buttonText, logOutbutton } = styles;
 
     return (
@@ -92,15 +99,20 @@ class TaskList extends Component {
             onValueChange={this.onToggle}
             value={filter !== 'pending'}
           />
-          <Text style={toggleText}>
+          <Text style={[buttonText, toggleText]}>
             {`Showing ${todos.length} ${filter} todo(s)`}
           </Text>
         </View>
-        <ListView
-          enableEmptySections
-          dataSource={dataSource}
-          renderRow={this.renderRow}
-        />
+        { loading
+          ? <Spinner />
+          : (
+            <ListView
+              enableEmptySections
+              dataSource={dataSource}
+              renderRow={this.renderRow}
+            />
+          )
+        }
         <TouchableOpacity
           style={button}
           onPress={() => navigation.navigate('TaskForm')}
@@ -108,14 +120,14 @@ class TaskList extends Component {
           <Icon
             name="add"
             style={buttonText}
-            size={22}
+            size={36}
           />
         </TouchableOpacity>
         <TouchableOpacity
           style={[button, logOutbutton]}
           onPress={() => this.onLogoutPressed()}
         >
-          <Text>log out</Text>
+          <Text style={buttonText}>Logout</Text>
         </TouchableOpacity>
       </View>
     );
@@ -126,6 +138,7 @@ const mapStateToProps = ({ todos }) => {
   return {
     todos: todos.todos,
     filter: todos.filter,
+    loading: todos.loading,
   };
 };
 

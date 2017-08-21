@@ -1,14 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { TextInput, View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
+import Input from '../../components/Input/Input';
 import { addTodo } from '../../actions/todos';
 import styles from './styles';
 
 class TaskForm extends Component {
   static navigationOptions = {
-    title: 'Add todo',
+    title: 'New todo',
+    headerTitleStyle: {
+      color: 'rgba(255, 255, 255, 0.5)',
+    },
+    headerStyle: {
+      backgroundColor: '#383846',
+    },
+    headerTintColor: 'rgba(255, 255, 255, 0.5)',
   };
 
   static propTypes = {
@@ -22,8 +30,14 @@ class TaskForm extends Component {
     this.onAddPressed = this.onAddPressed.bind(this);
   }
 
+  state = {
+    task: '',
+  }
+
   onChange(text) {
-    this.task = text;
+    this.setState({
+      task: text,
+    });
   }
 
   onAddPressed(task = 'Empty') {
@@ -32,24 +46,31 @@ class TaskForm extends Component {
   }
 
   render() {
-    const { container, input, horizontalContainer, button, buttonText, cancel } = styles;
+    const { container, horizontalContainer, input, button, buttonText } = styles;
+    const { task } = this.state;
 
     return (
       <View style={container}>
-        <TextInput
-          style={input}
+        <Input
+          placeholder="Your todo"
           onChangeText={this.onChange}
+          style={input}
         />
         <View style={horizontalContainer}>
-          <TouchableOpacity style={button} onPress={() => this.onAddPressed(this.task)}>
-            <Icon name="send" size={24} style={buttonText} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[button, cancel]}
-            onPress={() => this.props.navigation.goBack()}
-          >
-            <Icon name="clear" size={24} style={buttonText} />
-          </TouchableOpacity>
+          { task.length > 0
+            && (
+              <TouchableOpacity
+                style={button}
+                onPress={() => this.onAddPressed(task)}
+              >
+                <Icon
+                  name="send"
+                  size={36}
+                  style={buttonText}
+                />
+              </TouchableOpacity>
+            )
+          }
         </View>
       </View>
     );

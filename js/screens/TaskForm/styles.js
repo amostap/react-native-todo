@@ -1,6 +1,6 @@
 const styles = {
   container: {
-    backgroundColor: '#E0F2F1',
+    backgroundColor: '#3E3D4B',
     flex: 1,
     justifyContent: 'center',
   },
@@ -8,28 +8,22 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  input: {
-    height: 50,
-    marginLeft: 20,
-    marginRight: 20,
-    paddingLeft: 5,
-    paddingRight: 5,
-  },
   button: {
     margin: 10,
     width: 60,
     height: 60,
-    backgroundColor: '#00CC6A',
+    backgroundColor: '#46AB17',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 50,
     elevation: 5,
   },
   buttonText: {
-    color: '#fff',
+    color: 'rgba(255, 255, 255, 0.6)',
   },
-  cancel: {
-    backgroundColor: '#EF6950',
+  input: {
+    width: 260,
+    alignSelf: 'center',
   },
 };
 
