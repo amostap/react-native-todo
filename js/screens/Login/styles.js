@@ -1,24 +1,26 @@
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: '#E0F2F1',
-    padding: 20,
+    alignItems: 'center',
+  },
+  image: {
+    width: 110,
+    height: 110,
+  },
+  contentContainer: {
+    width: 260,
+    flex: 1,
+    justifyContent: 'space-around',
+  },
+  infoContainer: {
+    height: 20,
+    alignItems: 'center',
   },
   messageStyle: {
     fontSize: 14,
-  },
-  input: {
-    height: 40,
-  },
-  buttonsContainer: {
-    flexDirection: 'row',
-  },
-  button: {
-    marginRight: 15,
-    marginLeft: 15,
-  },
-  link: {
-    color: '#4DB6AC',
+    color: '#D2AD22',
+    paddingLeft: 10,
+    paddingRight: 10,
   },
 };
 

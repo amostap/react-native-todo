@@ -28,6 +28,7 @@ export default function authStore(state = initialState, action) {
     case LOG_OUT_SUCCESS:
       return {
         ...state,
+        loading: false,
       };
     case LOG_IN_FAIL:
       return {
@@ -44,6 +45,7 @@ export default function authStore(state = initialState, action) {
     case LOG_OUT_FAIL:
       return {
         ...state,
+        loading: false,
         message: action.message,
       };
     case LOADING:

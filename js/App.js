@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, StatusBar } from 'react-native';
 import * as firebase from 'firebase';
 import TaskListNavigator from './navigation/TaskListNavigator';
 import Login from './screens/Login/Login';
@@ -32,12 +32,22 @@ export default class App extends Component {
   }
 
   render() {
+    const { app, appPreload } = styles;
     const { isUserLoggedIn } = this.state;
+
     if (isUserLoggedIn === null) {
-      return <Spinner />;
+      return (
+        <View style={[app, appPreload]}>
+          <Spinner />
+        </View>
+      );
     }
     return (
-      <View style={styles.app}>
+      <View style={app}>
+        <StatusBar
+          backgroundColor="#383846"
+          barStyle="light-content"
+        />
         { isUserLoggedIn
           ? <TaskListNavigator />
           : <Login />
