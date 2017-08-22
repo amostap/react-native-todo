@@ -3,7 +3,7 @@ import { View, StatusBar } from 'react-native';
 import * as firebase from 'firebase';
 import TaskListNavigator from './navigation/TaskListNavigator';
 import Login from './screens/Login/Login';
-import Spinner from './components/Spinner/Spinner';
+import Logo from './components/Logo/Logo';
 import config from './config';
 import styles from './app.styles';
 
@@ -38,7 +38,7 @@ export default class App extends Component {
     if (isUserLoggedIn === null) {
       return (
         <View style={[app, appPreload]}>
-          <Spinner />
+          <Logo />
         </View>
       );
     }

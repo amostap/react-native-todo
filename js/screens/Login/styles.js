@@ -3,10 +3,6 @@ const styles = {
     flex: 1,
     alignItems: 'center',
   },
-  image: {
-    width: 110,
-    height: 110,
-  },
   contentContainer: {
     width: 260,
     flex: 1,
