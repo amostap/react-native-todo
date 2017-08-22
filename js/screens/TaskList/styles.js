@@ -32,8 +32,28 @@ const styles = {
   toggleText: {
     marginLeft: 20,
   },
-  logOutbutton: {
-    left: 15,
+  drawerContainer: {
+    padding: 10,
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  logoutButton: {
+    padding: 10,
+    margin: 10,
+    width: 260,
+    backgroundColor: '#383846',
+  },
+  text: {
+    color: 'rgba(255, 255, 255, 0.6)',
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  infoText: {
+    textAlign: 'center',
+  },
+  menuIcon: {
+    marginRight: 15,
+    color: 'rgba(255, 255, 255, 0.6)',
   },
 };
 
