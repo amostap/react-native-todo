@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, Image } from 'react-native';
+import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { logIn, singUp } from '../../actions/auth';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
-import Logo from '../../../assets/images/icon.png';
+import Logo from '../../components/Logo/Logo';
 import Spinner from '../../components/Spinner/Spinner';
 import styles from './styles';
 
@@ -49,14 +49,14 @@ class Login extends Component {
   }
 
   render() {
-    const { container, image, contentContainer, infoContainer,
+    const { container, contentContainer, infoContainer,
       messageStyle } = styles;
     const { password, email } = this.state;
     const { loading, message } = this.props;
 
     return (
       <View style={container}>
-        <Image style={image} source={Logo} />
+        <Logo />
         <View style={contentContainer}>
           <View>
             <Input
