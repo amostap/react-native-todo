@@ -1,7 +1,9 @@
+import globalStyles from './globalStyles';
+
 const styles = {
   app: {
     flex: 1,
-    backgroundColor: '#383846',
+    backgroundColor: globalStyles.colors.gray,
   },
   appPreload: {
     alignItems: 'center',

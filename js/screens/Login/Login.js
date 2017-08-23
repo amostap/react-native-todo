@@ -7,6 +7,7 @@ import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
 import Logo from '../../components/Logo/Logo';
 import Spinner from '../../components/Spinner/Spinner';
+import globalStyles from '../../globalStyles';
 import styles from './styles';
 
 class Login extends Component {
@@ -49,8 +50,7 @@ class Login extends Component {
   }
 
   render() {
-    const { container, contentContainer, infoContainer,
-      messageStyle } = styles;
+    const { container, contentContainer, infoContainer, messageStyle } = styles;
     const { password, email } = this.state;
     const { loading, message } = this.props;
 
@@ -81,12 +81,12 @@ class Login extends Component {
           </View>
           <View>
             <Button
-              color="#CA0E13"
+              color={globalStyles.colors.red}
               title="Login"
               onPress={() => this.onLoginPressed(email, password)}
             />
             <Button
-              color="#4A4959"
+              color={globalStyles.colors.lightGray}
               title="Sign Up"
               onPress={() => this.onSignUpPressed(email, password)}
             />

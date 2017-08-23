@@ -6,17 +6,18 @@ import { connect } from 'react-redux';
 import Input from '../../components/Input/Input';
 import { addTodo } from '../../actions/todos';
 import styles from './styles';
+import globalStyles from '../../globalStyles';
 
 class TaskForm extends Component {
   static navigationOptions = {
     title: 'New todo',
     headerTitleStyle: {
-      color: 'rgba(255, 255, 255, 0.5)',
+      color: globalStyles.colors.transparentWhite,
     },
     headerStyle: {
-      backgroundColor: '#383846',
+      backgroundColor: globalStyles.colors.gray,
     },
-    headerTintColor: 'rgba(255, 255, 255, 0.5)',
+    headerTintColor: globalStyles.colors.transparentWhite,
   };
 
   static propTypes = {

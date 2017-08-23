@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { View, ActivityIndicator } from 'react-native';
 import styles from './styles';
+import globalStyles from '../../globalStyles';
 
 const Spinner = ({ size, color }) => (
   <View style={styles.container}>
@@ -14,7 +15,7 @@ const Spinner = ({ size, color }) => (
 
 Spinner.defaultProps = {
   size: 'large',
-  color: '#D2D2D5',
+  color: globalStyles.colors.transparentWhite,
 };
 
 Spinner.propTypes = {

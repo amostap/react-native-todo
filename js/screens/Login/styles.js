@@ -1,3 +1,5 @@
+import globalStyles from '../../globalStyles';
+
 const styles = {
   container: {
     flex: 1,
@@ -14,7 +16,7 @@ const styles = {
   },
   messageStyle: {
     fontSize: 14,
-    color: '#D2AD22',
+    color: globalStyles.colors.yellow,
     paddingLeft: 10,
     paddingRight: 10,
   },

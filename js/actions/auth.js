@@ -1,5 +1,6 @@
 import * as firebase from 'firebase';
 import {
+  CHECK_AUTH,
   LOG_IN_SUCCESS,
   LOG_IN_FAIL,
   SIGN_UP_SUCCESS,
@@ -13,8 +14,15 @@ export const logIn = ({ email, password }) => {
   return (dispatch) => {
     dispatch({ type: LOADING });
     firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(() => { dispatch({ type: LOG_IN_SUCCESS }); })
+      .then((res) => { dispatch({ type: LOG_IN_SUCCESS, email: res.email }); })
       .catch((err) => { dispatch({ type: LOG_IN_FAIL, message: err.message }); });
+  };
+};
+
+export const checkAuth = ({ email }) => {
+  return {
+    type: CHECK_AUTH,
+    email,
   };
 };
 
@@ -22,7 +30,7 @@ export const singUp = ({ email, password }) => {
   return (dispatch) => {
     dispatch({ type: LOADING });
     firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then(() => { dispatch({ type: SIGN_UP_SUCCESS }); })
+      .then((res) => { dispatch({ type: SIGN_UP_SUCCESS, email: res.email }); })
       .catch((err) => { dispatch({ type: SIGN_UP_FAIL, message: err.message }); });
   };
 };

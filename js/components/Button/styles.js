@@ -1,14 +1,16 @@
+import globalStyles from '../../globalStyles';
+
 const styles = {
   touchable: {
     margin: 5,
     height: 50,
     borderRadius: 50,
-    elevation: 3,
+    elevation: 4,
     justifyContent: 'center',
     alignItems: 'center',
   },
   text: {
-    color: 'rgba(255, 255, 255, 0.6)',
+    color: globalStyles.colors.transparentWhite,
     fontSize: 16,
   },
 };

@@ -8,6 +8,7 @@ import styles from './styles';
 class Drawer extends Component {
   static propTypes = {
     logOut: PropTypes.func.isRequired,
+    userEmail: PropTypes.string.isRequired,
   };
 
   constructor(props, context) {
@@ -25,13 +26,14 @@ class Drawer extends Component {
 
     return (
       <View style={drawerContainer}>
+        <Text style={text}>{this.props.userEmail}</Text>
         <TouchableOpacity
           onPress={() => this.onLogoutPressed()}
           style={logoutButton}
         >
           <Text style={text}>Logout</Text>
         </TouchableOpacity>
-        <Text style={infoText}>v 0.0.3</Text>
+        <Text style={infoText}>v 0.1.0</Text>
       </View>
     );
   }
