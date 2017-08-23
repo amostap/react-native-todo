@@ -26,7 +26,7 @@ class TaskList extends Component {
         <TouchableOpacity
           // TODO: rewrite this
           onPress={() => {
-            a%2 === 0 ? params.onOpenDrawer() : params.onCloseDrawer();
+            a % 2 === 0 ? params.onOpenDrawer() : params.onCloseDrawer();
             a += 1;
           }}
         >

@@ -52,6 +52,7 @@ class TaskForm extends Component {
     return (
       <View style={container}>
         <Input
+          autoFocus
           placeholder="Your todo"
           onChangeText={this.onChange}
           style={input}

@@ -6,7 +6,7 @@ import styles from './styles';
 
 const TaskRow = ({ todo, onDone, onDelete }) => (
   <View style={styles.container}>
-    <Text style={styles.taskText}>
+    <Text style={todo.state === 'done' ? styles.taskDoneText : styles.taskText}>
       { todo.task }
     </Text>
     <View style={styles.buttonsContainer}>
