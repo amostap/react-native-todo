@@ -18,6 +18,13 @@ const styles = {
     fontWeight: '300',
     color: 'rgba(255, 255, 255, 0.7)',
   },
+  taskDoneText: {
+    flex: 1,
+    fontSize: 16,
+    fontWeight: '300',
+    color: 'rgba(255, 255, 255, 0.7)',
+    textDecorationLine: 'line-through',
+  },
   buttonsContainer: {
     width: 57,
     marginLeft: 5,
