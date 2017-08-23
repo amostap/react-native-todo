@@ -6,26 +6,41 @@ import {
   SIGN_UP_FAIL,
   LOG_OUT_FAIL,
   LOADING,
+  CHECK_AUTH,
 } from '../actions/types';
 
 const initialState = {
   message: '',
   loading: false,
+  user: {
+    email: '',
+  },
 };
 
 export default function authStore(state = initialState, action) {
   switch (action.type) {
     case LOG_IN_SUCCESS:
+      console.log('LOG_IN_SUCCESS');
       return {
         ...state,
         ...initialState,
+        user: {
+          ...state.user,
+          email: action.email,
+        },
       };
     case SIGN_UP_SUCCESS:
+      console.log('SIGN_UP_SUCCESS');
       return {
         ...state,
         ...initialState,
+        user: {
+          ...state.user,
+          email: action.email,
+        },
       };
     case LOG_OUT_SUCCESS:
+      console.log('LOG_OUT_SUCCESS');
       return {
         ...state,
         loading: false,
@@ -48,12 +63,22 @@ export default function authStore(state = initialState, action) {
         loading: false,
         message: action.message,
       };
+    case CHECK_AUTH:
+      console.log('CHECK_AUTH', action.email);
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          email: action.email,
+        },
+      };
     case LOADING:
       return {
         ...state,
         loading: true,
       };
     default:
+      console.log('default');
       return state;
   }
 }

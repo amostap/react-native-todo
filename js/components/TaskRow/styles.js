@@ -1,7 +1,9 @@
+import globalStyles from '../../globalStyles';
+
 const styles = {
   container: {
-    borderRadius: 10,
-    backgroundColor: '#30303C',
+    borderRadius: 5,
+    backgroundColor: globalStyles.colors.lightGray,
     padding: 15,
     flex: 1,
     flexDirection: 'row',
@@ -12,29 +14,25 @@ const styles = {
     marginRight: 10,
     elevation: 4,
   },
-  taskText: {
-    flex: 1,
-    fontSize: 16,
-    fontWeight: '300',
-    color: 'rgba(255, 255, 255, 0.7)',
+  doneContainer: {
+    backgroundColor: globalStyles.colors.darkGray,
+    elevation: 4,
   },
-  taskDoneText: {
+  text: {
+    paddingLeft: 5,
+    paddingRight: 5,
+    textAlignVertical: 'center',
     flex: 1,
     fontSize: 16,
     fontWeight: '300',
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: globalStyles.colors.transparentWhite,
+  },
+  doneText: {
     textDecorationLine: 'line-through',
   },
-  buttonsContainer: {
-    width: 57,
-    marginLeft: 5,
-    marginRight: -5,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
+  buttonContainer: {
+    justifyContent: 'center',
     alignItems: 'center',
-  },
-  button: {
-    marginRight: 10,
   },
 };
 

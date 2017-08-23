@@ -1,17 +1,14 @@
+import globalStyles from '../../globalStyles';
+
 const styles = {
   container: {
-    backgroundColor: '#3E3D4B',
-    paddingTop: 15,
+    backgroundColor: globalStyles.colors.gray,
     flex: 1,
     justifyContent: 'flex-start',
   },
-  switchView: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 20,
-    marginRight: 20,
+  listView: {
+    paddingTop: 10,
+    paddingBottom: 10,
   },
   button: {
     position: 'absolute',
@@ -19,18 +16,15 @@ const styles = {
     height: 65,
     bottom: 15,
     right: 15,
-    backgroundColor: '#CA0E13',
+    backgroundColor: globalStyles.colors.red,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'flex-end',
     borderRadius: 50,
-    elevation: 5,
+    elevation: 4,
   },
   buttonText: {
-    color: 'rgba(255, 255, 255, 0.6)',
-  },
-  toggleText: {
-    marginLeft: 20,
+    color: globalStyles.colors.transparentWhite,
   },
   drawerContainer: {
     padding: 10,
@@ -38,13 +32,14 @@ const styles = {
     justifyContent: 'flex-end',
   },
   logoutButton: {
+    borderRadius: 5,
     padding: 10,
     margin: 10,
     width: 260,
-    backgroundColor: '#383846',
+    backgroundColor: globalStyles.colors.yellow,
   },
   text: {
-    color: 'rgba(255, 255, 255, 0.6)',
+    color: globalStyles.colors.transparentWhite,
     fontSize: 18,
     textAlign: 'center',
   },
@@ -53,7 +48,7 @@ const styles = {
   },
   menuIcon: {
     marginRight: 15,
-    color: 'rgba(255, 255, 255, 0.6)',
+    color: globalStyles.colors.transparentWhite,
   },
 };
 

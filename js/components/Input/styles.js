@@ -1,8 +1,10 @@
+import globalStyles from '../../globalStyles';
+
 const styles = {
   input: {
     paddingRight: 10,
     paddingLeft: 10,
-    color: 'rgba(255, 255, 255, 0.6)',
+    color: globalStyles.colors.transparentWhite,
     height: 40,
   },
 };

@@ -1,10 +1,10 @@
 import * as firebase from 'firebase';
 import {
   GET_TODOS_SUCCESS,
-  TOGGLE_STATE,
   DONE_TODO,
   DELETE_TODO,
   LOADING,
+  UNDONE_TODO,
 } from './types';
 
 export const getTodos = () => {
@@ -40,8 +40,10 @@ export const doneTodo = (todo) => {
   };
 };
 
-export const toggleState = () => {
-  return {
-    type: TOGGLE_STATE,
+export const undoneTodo = (todo) => {
+  return (dispatch) => {
+    firebase.database().ref(`/allTodos/${firebase.auth().currentUser.uid}/todos/${todo.id}`)
+      .set({ task: todo.task, state: 'pending' })
+      .then(() => dispatch({ type: UNDONE_TODO, todo }));
   };
 };

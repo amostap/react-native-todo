@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, ListView, Text, TouchableOpacity, Switch, DrawerLayoutAndroid } from 'react-native';
+import { View, ListView, TouchableOpacity, DrawerLayoutAndroid } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
-import { doneTodo, toggleState, deleteTodo, getTodos } from '../../actions/todos';
+import { doneTodo, deleteTodo, getTodos, undoneTodo } from '../../actions/todos';
 import TaskRow from '../../components/TaskRow/TaskRow';
 import Drawer from './Drawer';
 import Spinner from '../../components/Spinner/Spinner';
 import styles from './styles';
+import globalStyles from '../../globalStyles';
 
 class TaskList extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -15,16 +16,16 @@ class TaskList extends Component {
     let a = 1;
 
     return {
-      title: 'TODOs',
+      title: 'TODO',
       headerTitleStyle: {
-        color: 'rgba(255, 255, 255, 0.5)',
+        color: globalStyles.colors.transparentWhite,
       },
       headerStyle: {
-        backgroundColor: '#383846',
+        backgroundColor: globalStyles.colors.gray,
       },
       headerRight: (
         <TouchableOpacity
-          // TODO: rewrite this
+          // TODO: rewrite this shit
           onPress={() => {
             a % 2 === 0 ? params.onOpenDrawer() : params.onCloseDrawer();
             a += 1;
@@ -42,13 +43,13 @@ class TaskList extends Component {
 
   static propTypes = {
     navigation: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-    filter: PropTypes.string.isRequired,
     todos: PropTypes.arrayOf(PropTypes.object).isRequired,
     doneTodo: PropTypes.func.isRequired,
-    toggleState: PropTypes.func.isRequired,
+    undoneTodo: PropTypes.func.isRequired,
     deleteTodo: PropTypes.func.isRequired,
     getTodos: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
+    userEmail: PropTypes.string.isRequired,
   };
 
   constructor(props, context) {
@@ -63,8 +64,8 @@ class TaskList extends Component {
     };
 
     this.onDone = this.onDone.bind(this);
+    this.onUndone = this.onUndone.bind(this);
     this.onDelete = this.onDelete.bind(this);
-    this.onToggle = this.onToggle.bind(this);
     this.renderRow = this.renderRow.bind(this);
     this.onOpenDrawer = this.onOpenDrawer.bind(this);
     this.onCloseDrawer = this.onCloseDrawer.bind(this);
@@ -92,8 +93,8 @@ class TaskList extends Component {
     this.props.doneTodo(todo);
   }
 
-  onToggle() {
-    this.props.toggleState();
+  onUndone(todo) {
+    this.props.undoneTodo(todo);
   }
 
   onDelete(todo) {
@@ -113,6 +114,7 @@ class TaskList extends Component {
       <TaskRow
         todo={todo}
         onDone={this.onDone}
+        onUndone={this.onUndone}
         onDelete={t => this.onDelete(t)}
       />
     );
@@ -120,31 +122,25 @@ class TaskList extends Component {
 
   render() {
     const { dataSource } = this.state;
-    const { navigation, todos, filter, loading } = this.props;
-    const { container, switchView, toggleText, button, buttonText } = styles;
+    const { navigation, loading, userEmail } = this.props;
+    const { container, button, buttonText, listView } = styles;
 
     return (
       <DrawerLayoutAndroid
-        drawerBackgroundColor="#3E3D4B"
+        drawerBackgroundColor={globalStyles.colors.gray}
         drawerWidth={300}
         ref={ref => this.drawer = ref}
         drawerPosition={DrawerLayoutAndroid.positions.Right}
-        renderNavigationView={() => <Drawer />}
+        renderNavigationView={() => <Drawer userEmail={userEmail} />}
       >
         <View style={container}>
-          <View style={switchView}>
-            <Switch
-              onValueChange={this.onToggle}
-              value={filter !== 'pending'}
-            />
-            <Text style={[buttonText, toggleText]}>
-              {`Showing ${todos.length} ${filter} todo(s)`}
-            </Text>
-          </View>
           { loading
             ? <Spinner />
             : (
               <ListView
+                contentContainerStyle={listView}
+                contentInset={{ bottom: 49 }}
+                automaticallyAdjustContentInsets={false}
                 enableEmptySections
                 dataSource={dataSource}
                 renderRow={this.renderRow}
@@ -167,15 +163,15 @@ class TaskList extends Component {
   }
 }
 
-const mapStateToProps = ({ todos }) => {
+const mapStateToProps = ({ todos, auth }) => {
   return {
+    userEmail: auth.user.email,
     todos: todos.todos,
-    filter: todos.filter,
     loading: todos.loading,
   };
 };
 
 export default connect(
   mapStateToProps,
-  { doneTodo, toggleState, deleteTodo, getTodos },
+  { doneTodo, deleteTodo, getTodos, undoneTodo },
 )(TaskList);

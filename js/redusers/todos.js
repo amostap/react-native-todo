@@ -1,17 +1,14 @@
-import filter from 'lodash/filter';
-import map from 'lodash/map';
+import { filter, map, sortBy } from 'lodash';
 import {
   DELETE_TODO,
   DONE_TODO,
-  TOGGLE_STATE,
   GET_TODOS_SUCCESS,
   LOADING,
+  UNDONE_TODO,
 } from '../actions/types';
 
 const initialState = {
   todos: [],
-  allTodos: [],
-  filter: 'pending',
   loading: false,
 };
 
@@ -25,8 +22,7 @@ export default function todoStore(state = initialState, action) {
       }));
       return {
         ...state,
-        todos: filter(todos, todo => todo.state === state.filter),
-        allTodos: todos,
+        todos: sortBy(todos, todo => todo.state === 'done'),
         loading: false,
       };
     case LOADING:
@@ -37,7 +33,6 @@ export default function todoStore(state = initialState, action) {
     case DELETE_TODO:
       return {
         ...state,
-        allTodos: filter(state.allTodos, todo => todo.id !== action.todo.id),
         todos: filter(state.todos, todo => todo.id !== action.todo.id),
       };
     case DONE_TODO:
@@ -45,20 +40,24 @@ export default function todoStore(state = initialState, action) {
         ...action.todo,
         state: 'done',
       };
-      const updatedAllTodos = map(state.allTodos, todo =>
+      const updatedTodos = map(state.todos, todo =>
         todo.id === action.todo.id ? doneTodo : todo,
       );
       return {
         ...state,
-        allTodos: updatedAllTodos,
-        todos: filter(updatedAllTodos, todo => todo.state === state.filter),
+        todos: updatedTodos,
       };
-    case TOGGLE_STATE:
-      const todoFilter = state.filter === 'pending' ? 'done' : 'pending';
+    case UNDONE_TODO:
+      const undoneTodo = {
+        ...action.todo,
+        state: 'pending',
+      };
+      const updateTodos = map(state.todos, todo =>
+        todo.id === action.todo.id ? undoneTodo : todo,
+      );
       return {
         ...state,
-        filter: todoFilter,
-        todos: filter(state.allTodos, todo => todo.state === todoFilter),
+        todos: updateTodos,
       };
     default:
       return state;
