@@ -20,7 +20,6 @@ const initialState = {
 export default function authStore(state = initialState, action) {
   switch (action.type) {
     case LOG_IN_SUCCESS:
-      console.log('LOG_IN_SUCCESS');
       return {
         ...state,
         ...initialState,
@@ -30,7 +29,6 @@ export default function authStore(state = initialState, action) {
         },
       };
     case SIGN_UP_SUCCESS:
-      console.log('SIGN_UP_SUCCESS');
       return {
         ...state,
         ...initialState,
@@ -40,7 +38,6 @@ export default function authStore(state = initialState, action) {
         },
       };
     case LOG_OUT_SUCCESS:
-      console.log('LOG_OUT_SUCCESS');
       return {
         ...state,
         loading: false,
@@ -64,7 +61,6 @@ export default function authStore(state = initialState, action) {
         message: action.message,
       };
     case CHECK_AUTH:
-      console.log('CHECK_AUTH', action.email);
       return {
         ...state,
         user: {
@@ -78,7 +74,6 @@ export default function authStore(state = initialState, action) {
         loading: true,
       };
     default:
-      console.log('default');
       return state;
   }
 }
